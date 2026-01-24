@@ -105,6 +105,11 @@ trading-core/
   - Flyway 사용 방법
   - 마이그레이션 파일 작성 규칙
 
+- **[BRANCH_AND_COMMIT_GUIDE.md](docs/develop-guide/BRANCH_AND_COMMIT_GUIDE.md)**: 브랜치 및 커밋 가이드
+  - 브랜치 네이밍 규칙 (`#{ISSUE_NUM}_{FUNCTION_DESC}`)
+  - 커밋 메시지 규칙 (`티켓 번호 : 설명`)
+  - 개발 워크플로우
+
 - **[timescaledb-guide.md](docs/basic-knowledge/timescaledb-guide.md)**: TimescaleDB 가이드
   - TimescaleDB 개념 및 활용
   - 트레이딩 시스템에서의 활용 예시
@@ -122,10 +127,19 @@ docs/
 │   ├── DATABASE_STRATEGY.md            # DB 전략
 │   └── MODULITH_STRATEGY.md            # Spring Modulith 전략
 ├── develop-guide/                      # 개발 가이드
-│   └── DB_MIGRATION_GUIDE.md           # DB 마이그레이션 가이드
+│   ├── DB_MIGRATION_GUIDE.md           # DB 마이그레이션 가이드
+│   └── BRANCH_AND_COMMIT_GUIDE.md      # 브랜치 및 커밋 가이드
 └── basic-knowledge/                    # 기본 지식
     └── timescaledb-guide.md            # TimescaleDB 가이드
 ```
+
+## 🌿 브랜치 및 커밋 규칙
+
+브랜치 네이밍 및 커밋 메시지 규칙은 [브랜치 및 커밋 가이드](docs/develop-guide/BRANCH_AND_COMMIT_GUIDE.md)를 참고하세요.
+
+**요약**:
+- **브랜치 네이밍**: `#{ISSUE_NUM}_{FUNCTION_DESC}` 형식 (예: `feature/#10_implement_data_collection`)
+- **커밋 메시지**: `티켓 번호 : 설명` 형식 (예: `#10 : 데이터 수집 모듈 구현`)
 
 ## 🚀 시작하기
 
