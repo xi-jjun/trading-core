@@ -21,27 +21,31 @@
 
 ```text
 com.xijjun.trading.<module_name>
-├── port/                 # [PUBLIC] 타 모듈과 소통하는 접점
+├── api/                  # [PUBLIC] 타 모듈과 소통하는 접점
 │   ├── in/               # API: 외부에서 이 모듈을 호출하는 인터페이스 (UseCase)
 │   └── out/              # SPI: 이 모듈이 외부 데이터를 필요로 할 때 정의하는 인터페이스
-│       └── model/        # Port에서 사용하는 전용 DTO 및 VO (Data Class)
 │
-├── domain/               # [INTERNAL] 순수 비즈니스 로직 (Service, Domain Model)
-│
-└── internal/             # [INTERNAL] 상세 구현 영역 (외부 참조 불가)
-    ├── entity/           # JPA Entity (해당 모듈 전용)
-    ├── repository/       # Spring Data Repository
-    └── adapter/          # Outbound Port의 실제 구현체 (타 모듈 데이터 매핑)
+└── internal/                  # [Internal] 캡슐화 영역
+    ├── domain/                # [INTERNAL] 순수 비즈니스 로직 (Service, Domain Model)
+    │   └── usecases/          # Domain Service Logic
+    │       └── OrderCreateService.kt # 포지션 주문을 요청하는 서비스 로직
+    ├── model/                 # JPA Entity class
+    │   ├── OrderRepository.kt # repository interface (구현체는 infrastructure)
+    │   └── Order.kt           # JPA Entity class
+    └── infrastructure/        # 기술적 세부 구현
+        ├── persistence/       # DB, File Storage 등 실제 구현체
+        │   └── OrderRepositoryImpl.kt
+        └── adapter/           # 타 모듈 Port의 실제 구현체
 ```
 
 ### 가시성 규칙 (Visibility)
-- port/ 하위: public으로 선언하여 다른 모듈에서 참조 가능.
-- internal/, domain/ 하위: 반드시 internal 키워드를 사용하여 타 모듈의 import를 차단.
+- `api/` 하위: public으로 선언하여 다른 모듈에서 참조 가능.
+- `internal/` 하위: 반드시 `internal` 키워드를 사용하여 타 모듈의 import를 차단.
 
 
 ## 🔄 3. 모듈 간 데이터 통신 가이드
 ### 상황 A: 동기 데이터 조회 (Port/Adapter)
-- 방식: 데이터를 요청하는 모듈이 port.out에 인터페이스를 정의하고, 데이터를 가진 모듈이 internal.adapter에서 이를 구현합니다.
+- 방식: 데이터를 요청하는 모듈이 `api.out`에 인터페이스를 정의하고, 데이터를 가진 모듈이 `internal.infrastructure.adapter`에서 이를 구현합니다.
 - 장점: 요청 모듈은 제공 모듈의 엔티티 구조를 몰라도 되며, 자신만의 VO로 데이터를 받습니다.
 
 ### 상황 B: 비동기 상태 전파 (Event Driven)
@@ -66,11 +70,15 @@ fun verifyModulith() {
 }
 ```
 
-📝 6. 모듈 리스트 (Bounded Contexts)
-모듈명	책임 범위
-- marketdata	외부 거래소 데이터 수집 및 시계열 데이터 관리
-- analysis	기술적 지표 계산 및 차트 패턴 분석
-- decision	AI 기반 전략 실행 및 매매 신호 생성
-- trading	주문 실행, 체결 관리, 포지션 추적
-- risk	리스크 한도 검증 및 손절/익절 정책 관리
-- ui	사용자 REST API 제공 및 웹소켓 알림
+## 📝 6. 모듈 리스트 (Bounded Contexts)
+```text
+com.xijjun.trading
+├── shared/         # 공통 값 객체 (VO)
+├── marketdata/     # 수집
+├── analysis/       # 지표 계산
+├── decision/       # 전략/AI
+├── trading/        # 주문/포지션 (Core)
+├── risk/           # 리스크 검증 (Guard)
+└── ui/             # API/웹소켓
+```
+
