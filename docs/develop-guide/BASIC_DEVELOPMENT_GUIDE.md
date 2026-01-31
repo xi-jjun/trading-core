@@ -1,8 +1,7 @@
-# 🚀 Trading Core System Architecture Guide
+# 🚀 Trading Core System Architecture Development Guide
 
 이 프로젝트는 **Spring Boot 4**, **Kotlin**, **Spring Modulith**를 기반으로 하며, 도메인 주도 설계(DDD)의 **Bounded Context** 원칙을 따르는 모듈형 모놀리스(Modular Monolith) 구조입니다.
-
----
+해당 구조를 이해하고 개발할 때 아래 내용을 반드시 참고하여 구현해주세요.
 
 ## 🏗️ 1. 핵심 설계 원칙
 
@@ -13,7 +12,6 @@
 3. **엄격한 캡슐화 (Encapsulation)**
     - Kotlin의 `internal` 키워드를 사용하여 모듈 내부의 상세 구현(Entity, Repository)을 외부로부터 숨깁니다.
 
----
 
 ## 📁 2. 표준 패키지 구조 (Module Layout)
 
