@@ -17,12 +17,12 @@ Trading System은 거래소(Binance) API를 활용하여 실시간 데이터 수
 
 ### 백엔드
 
-- **언어**: Kotlin 2.2.21
+- **언어**: Kotlin 2.3.0
 - **프레임워크**: Spring Boot 4.0.1
 - **모듈화**: Spring Modulith 2.0.1
 - **데이터베이스**: PostgreSQL
 - **마이그레이션**: Flyway
-- **Java**: 17
+- **Java**: 25
 
 ### 주요 의존성
 
